@@ -2,56 +2,60 @@
 
 ## English
 
-This project groups words from a text, DOCX, or PDF file by their initial letter and saves them in a JSON file. It is useful for text analysis, language processing, or educational purposes.
+Groups words from text files, DOCX, PDF files, or web URLs by their initial letter and saves them in JSON files.
 
 ### Features
-- Reads text from `.txt`, `.docx`, or `.pdf` files
-- Groups words by their first letter
-- Saves the grouped words as a single JSON file (`kelimeler.json`)
+- Reads from `.txt`, `.docx`, `.pdf` files
+- Extracts text from web URLs
+- Groups words by first letter
+- Filters Turkish words (URL version)
+- Saves results as JSON
 
 ### Requirements
-- Python 3.x
-- `python-docx` and `PyPDF2` libraries
-
-Install requirements:
 ```bash
-pip install python-docx PyPDF2
+pip install python-docx PyPDF2 requests beautifulsoup4
 ```
 
 ### Usage
-1. Place your file (e.g., `ornek.docx`) in the project directory.
-2. Edit the `dosya_yolu` variable in `kelime.py` to your file name.
-3. Run the script:
-```bash
-python kelime.py
-```
-4. The grouped words will be saved in `kelimeler.json`.
+
+#### Local Files (`kelime.py`)
+1. Place your file in the project directory
+2. Edit `dosya_yolu` in `kelime.py`
+3. Run: `python kelime.py`
+4. Results saved to `kelimeler1.json`
+
+#### Web URLs (`url_kelime.py`)
+1. Edit `haber_linki` in `url_kelime.py`
+2. Run: `python url_kelime.py`
+3. Results saved to `kelimeler_url.json`
 
 ---
 
 ## Türkçe
 
-Bu proje, bir metin, DOCX veya PDF dosyasındaki kelimeleri baş harfine göre gruplar ve JSON dosyasına kaydeder. Metin analizi, dil işleme veya eğitim amaçları için kullanılabilir.
+Metin dosyaları, DOCX, PDF dosyaları veya web URL'lerindeki kelimeleri baş harfine göre gruplar ve JSON dosyalarına kaydeder.
 
 ### Özellikler
-- `.txt`, `.docx` veya `.pdf` dosyalarından metin okur
+- `.txt`, `.docx`, `.pdf` dosyalarından okur
+- Web URL'lerinden metin çıkarır
 - Kelimeleri ilk harfine göre gruplar
-- Gruplanmış kelimeleri tek bir JSON dosyasına (`kelimeler.json`) kaydeder
+- Türkçe kelimeleri filtreler (URL versiyonu)
+- Sonuçları JSON olarak kaydeder
 
 ### Gereksinimler
-- Python 3.x
-- `python-docx` ve `PyPDF2` kütüphaneleri
-
-Gereksinimleri yüklemek için:
 ```bash
-pip install python-docx PyPDF2
+pip install python-docx PyPDF2 requests beautifulsoup4
 ```
 
 ### Kullanım
-1. Dosyanızı (örn. `ornek.docx`) proje klasörüne koyun.
-2. `kelime.py` dosyasındaki `dosya_yolu` değişkenini dosya adınıza göre düzenleyin.
-3. Scripti çalıştırın:
-```bash
-python kelime.py
-```
-4. Gruplanmış kelimeler `kelimeler.json` dosyasına kaydedilecektir. 
+
+#### Yerel Dosyalar (`kelime.py`)
+1. Dosyanızı proje klasörüne koyun
+2. `kelime.py` dosyasındaki `dosya_yolu` değişkenini düzenleyin
+3. Çalıştırın: `python kelime.py`
+4. Sonuçlar `kelimeler1.json` dosyasına kaydedilir
+
+#### Web URL'leri (`url_kelime.py`)
+1. `url_kelime.py` dosyasındaki `haber_linki` değişkenini düzenleyin
+2. Çalıştırın: `python url_kelime.py`
+3. Sonuçlar `kelimeler_url.json` dosyasına kaydedilir 

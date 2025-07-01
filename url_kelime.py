@@ -4,6 +4,8 @@ import os
 from collections import defaultdict
 from docx import Document
 import PyPDF2
+import requests
+from bs4 import BeautifulSoup
 
 def metin_oku(dosya_yolu):
     uzanti = os.path.splitext(dosya_yolu)[1].lower()
@@ -27,26 +29,49 @@ def metin_oku(dosya_yolu):
     else:
         raise ValueError("Desteklenmeyen dosya türü: " + uzanti)
 
+def urlden_metin_cek(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+
+ 
+    content = soup.find("div", id="mw-content-text")
+    if not content:
+        content = soup  
+
+   
+    yazilar = []
+    for tag in content.find_all(["p", "h1", "h2", "h3", "h4", "h5", "h6", "li", "span", "b", "a"]):
+        text = tag.get_text(strip=True)
+        if text:
+            yazilar.append(text)
+
+    metin = "\n".join(yazilar)
+    return metin
+
 def kelimeleri_grupla_ve_kaydet(metin):
+    turkce_harfler = set("abcçdefgğhıijklmnoöprsştuüvyz")
     kelimeler = re.findall(r'\b\w+\b', metin.lower())
     gruplar = defaultdict(list)
 
     for kelime in kelimeler:
         ilk_harf = kelime[0]
-        gruplar[ilk_harf].append(kelime)
+        if ilk_harf in turkce_harfler:
+            gruplar[ilk_harf].append(kelime)
 
 
     gruplar = {
         harf: sorted(list(set(kelimeler)))
-        for harf, kelimeler in sorted(gruplar.items())
+        for harf, kelimeler in sorted(gruplar.items())  
     }
 
-    with open("kelimeler1.json", "w", encoding="utf-8") as f:
+    with open("kelimeler_url.json", "w", encoding="utf-8") as f:
         json.dump(gruplar, f, ensure_ascii=False, indent=2)
 
-    print("Tüm kelimeler alfabetik olarak gruplandı ve 'kelimeler1.json' dosyasına yazıldı.")
+    print("Sadece Türkçe harflerle başlayan kelimeler alfabetik sırayla 'kelimeler_url.json' dosyasına yazıldı.")
 
 
-dosya_yolu = r"ornek.docx" 
-metin = metin_oku(dosya_yolu)
+
+
+haber_linki = "https://www.milliyet.com.tr/"  
+metin = urlden_metin_cek(haber_linki)
 kelimeleri_grupla_ve_kaydet(metin)

@@ -72,6 +72,6 @@ def kelimeleri_grupla_ve_kaydet(metin):
 
 
 
-haber_linki = "https://www.milliyet.com.tr/"  
+haber_linki = "https://xxxxxxxxxxxxxxxx.tr/"  
 metin = urlden_metin_cek(haber_linki)
 kelimeleri_grupla_ve_kaydet(metin)
